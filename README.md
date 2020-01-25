@@ -77,6 +77,12 @@ Run receiver on a Kafka topic `telegram-topic` to see the messages sent to the b
 kubectl run kafka-consumer -ti --image=strimzi/kafka:0.16.0-kafka-2.4.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic telegram-topic --from-beginning
 ```
 
+or use
+
+```bash
+./get-telegram-messages.sh
+```
+
 ## Deploy the Amazon AWS SQS connector
 
 Once you have the messages in a Kafka topic, you can process them.
@@ -108,6 +114,12 @@ Next upload a text file into S3 bucket and check how it was sent by the S3 conne
 kubectl run kafka-consumer -ti --image=strimzi/kafka:0.16.0-kafka-2.4.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic s3-topic --from-beginning
 ```
 
+or use
+
+```bash
+./get-s3-messages.sh
+```
+
 We can see that it is just the Java Object.
 Now we can reconfigure the connector to use the `S3ObjectConverter`.
 
@@ -119,4 +131,10 @@ Now we can upload another file to S3 and check the message in Kafka which should
 
 ```bash
 kubectl run kafka-consumer -ti --image=strimzi/kafka:0.16.0-kafka-2.4.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic s3-topic --from-beginning
+```
+
+or use
+
+```bash
+./get-s3-messages.sh
 ```
