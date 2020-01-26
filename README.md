@@ -1,6 +1,8 @@
 # Metamorphosis: When Kafka Meets Camel
 
 This is a demo from a talk from the DevConf 2020 conference in Brno about the Camel based Apache Kafka connectors.
+The slides from the talk can be found [here](http://jsch.cz/metamorphosis).
+A video recording of this demo only can be found on [YouTube](https://youtu.be/QqF2bp30VZk).
 
 ## Prerequisites
 
@@ -15,6 +17,47 @@ oc apply -f 00-prometheus-grafana
 oc apply -f 00-aws-credentials.yaml
 oc apply -f 00-telegram-credentials.yaml
 oc apply -f 00-strimzi-cluster-operator
+```
+
+## Secrets with credentials
+
+The AWS properties file is expected to look something like this:
+
+```properties
+aws.access-key=XXXX
+aws.secret-key=xxxx
+aws.region=US_EAST_1
+```
+
+The properties file for Telegram should look like this:
+
+```properties
+token=123:xxx
+```
+
+The resulting Kubernetes secrets should look like this:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aws-credentials
+type: Opaque
+data:
+  aws-credentials.properties: >-
+    <Base64 of the properties file>
+```
+
+and 
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: telegram-credentials
+type: Opaque
+data:
+  telegram-credentials.properties: <Base64 of the properties file>
 ```
 
 ## Kafka cluster
